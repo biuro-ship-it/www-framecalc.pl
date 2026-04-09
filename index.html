@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrameCalc - Kalkulator dla Ramiarzy</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E67E22">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+
+    <div id="app">
+        <h1 class="text-center mt-20 text-2xl font-bold">FrameCalc.pl w budowie...</h1>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

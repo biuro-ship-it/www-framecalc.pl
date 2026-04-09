@@ -1,0 +1,15 @@
+{
+  "short_name": "FrameCalc",
+  "name": "FrameCalc - Profesjonalna Wycena Oprawy",
+  "icons": [
+    {
+      "src": "assets/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#2C3E50",
+  "display": "standalone",
+  "theme_color": "#E67E22"
+}
