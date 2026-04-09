@@ -7,18 +7,18 @@
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0F172A">
-    <meta name="description" content="Profesjonalny kalkulator wycen oprawy obrazów dla ramiarzy.">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass-effect { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .glass-effect { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .manufacturer-btn.active { border-color: #f97316; background-color: rgba(249, 115, 22, 0.1); color: white; }
     </style>
 </head>
-<body class="bg-[#0F172A] text-slate-200 antialiased">
+<body class="bg-[#0F172A] text-slate-200 antialiased font-sans">
 
     <nav class="sticky top-0 z-50 p-4 border-b border-slate-800 glass-effect">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
@@ -29,102 +29,93 @@
                 </div>
             </div>
             <div class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <a href="#kalkulator" class="hover:text-orange-500 transition">Kalkulator</a>
-                <a href="#funkcje" class="hover:text-orange-500 transition">Zalety</a>
-                <a href="#" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition">Zaloguj</a>
+                <a href="#kalkulator" class="hover:text-orange-500 transition font-bold">Demo Konfigurator</a>
+                <a href="https://app.framecalc.pl" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition shadow-lg shadow-orange-900/20 font-bold">Logowanie App</a>
             </div>
         </div>
     </nav>
 
-    <header class="py-16 px-6 text-center max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-            Twój warsztat ramiarski <br> <span class="text-orange-500 text-5xl md:text-7xl">w Twoim telefonie.</span>
-        </h1>
-        <p class="text-lg text-slate-400 mb-10 max-w-2xl mx-auto">
-            Zrezygnuj z liczydła i kartek. Obliczaj koszty materiałów, dodawaj marżę i archiwizuj zlecenia jednym kliknięciem.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#kalkulator" class="bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-xl shadow-orange-900/20">
-                Uruchom Kalkulator
-            </a>
-            <button onclick="alert('Użyj opcji Dodaj do ekranu głównego w przeglądarce')" class="bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all">
-                Pobierz jako Apkę
-            </button>
-        </div>
-    </header>
-
-    <section id="kalkulator" class="py-12 px-4">
+    <section id="kalkulator" class="py-16 px-4">
         <div class="max-w-xl mx-auto bg-[#1E293B] rounded-[2.5rem] p-8 md:p-10 shadow-3xl border border-slate-700">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="bg-orange-500/10 p-3 rounded-2xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-black text-white italic">WYCENA ZLECENIA</h2>
-            </div>
             
-            <div class="grid grid-cols-2 gap-6 mb-6">
+            <h2 class="text-2xl font-black text-white italic tracking-tighter uppercase mb-8 flex items-center gap-3">
+                <span class="text-orange-500">PRO</span> Wycena Zlecenia
+            </h2>
+
+            <div class="mb-8">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 block ml-1">Krok 1: Wybierz Producenta</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button type="button" onclick="selectManufacturer('Sayart')" id="btn-Sayart" class="manufacturer-btn py-4 px-2 border-2 border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:border-slate-600 transition-all uppercase italic">Sayart</button>
+                    <button type="button" onclick="selectManufacturer('Eurorama')" id="btn-Eurorama" class="manufacturer-btn py-4 px-2 border-2 border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:border-slate-600 transition-all uppercase italic">Eurorama</button>
+                    <button type="button" onclick="selectManufacturer('Lira')" id="btn-Lira" class="manufacturer-btn py-4 px-2 border-2 border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:border-slate-600 transition-all uppercase italic">Lira</button>
+                </div>
+            </div>
+
+            <div class="mb-8 transition-all" id="listwa-container" style="display: none;">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Krok 2: Kod Listwy</label>
+                <select id="kod-listwy" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none shadow-inner">
+                    </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mb-8">
                 <div class="space-y-2">
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Szerokość (cm)</label>
-                    <input type="number" id="szerokosc" placeholder="00.0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white outline-none focus:border-orange-500 transition shadow-inner">
+                    <input type="number" id="szerokosc" placeholder="00.0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white font-black outline-none focus:border-orange-500 transition shadow-inner">
                 </div>
                 <div class="space-y-2">
                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Wysokość (cm)</label>
-                    <input type="number" id="wysokosc" placeholder="00.0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white outline-none focus:border-orange-500 transition shadow-inner">
+                    <input type="number" id="wysokosc" placeholder="00.0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white font-black outline-none focus:border-orange-500 transition shadow-inner">
                 </div>
             </div>
 
-            <div class="space-y-2 mb-8">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Rodzaj Listwy / Oprawy</label>
-                <select id="rodzaj" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-white outline-none focus:border-orange-500 transition cursor-pointer appearance-none">
-                    <option value="standard">Rama Drewniana (Sosna/Dąb)</option>
-                    <option value="alu">Rama Aluminiowa (Profil G)</option>
-                    <option value="anty">Antyrama (Plexi/Szkło)</option>
+            <div class="mb-6">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Rodzaj Szkła</label>
+                <select id="rodzaj-szkla" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none shadow-inner">
+                    <option value="float">Szkło Float 2mm</option>
+                    <option value="antyrefleks">Szkło Antyrefleksyjne</option>
+                    <option value="brak">Brak (Sama oprawa)</option>
                 </select>
             </div>
 
-            <button id="btn-oblicz" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-2xl font-black text-xl tracking-tighter transition-all active:scale-95 shadow-xl shadow-orange-900/20">
-                OBLICZ WARTOŚĆ
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tyły (Plecy)</label>
+                    <select id="rodzaj-tyly" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none">
+                        <option value="hdf">Płyta HDF 3mm</option>
+                        <option value="pianka">Pianka 5mm</option>
+                        <option value="brak">Brak</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Passe-partout</label>
+                    <select id="rodzaj-paspartu" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none">
+                        <option value="brak">Brak</option>
+                        <option value="standard">Standard (Karton)</option>
+                        <option value="bezkwasowe">Bezkwasowe Premium</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Opłata Dodatkowa (zł)</label>
+                <input type="number" id="oplata-extra" placeholder="0.00" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-xl text-orange-500 font-black outline-none focus:border-orange-500 transition shadow-inner">
+            </div>
+
+            <button id="btn-oblicz" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-2xl font-black text-xl tracking-tighter transition-all active:scale-95 shadow-xl shadow-orange-900/30">
+                OBLICZ SUMĘ ZLECENIA
             </button>
 
             <div id="wynik-box" class="mt-10 pt-8 border-t border-slate-800 text-center hidden">
-                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Sugerowana cena dla klienta</p>
-                <div id="wynik-cena" class="text-6xl font-black text-white tabular-nums">0.00 <span class="text-2xl text-orange-500">zł</span></div>
-                <p class="text-slate-600 text-[10px] mt-4 italic">Cena uwzględnia materiał, robociznę i 23% VAT</p>
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Suma do zapłaty (Brutto)</p>
+                <div id="wynik-cena" class="text-6xl font-black text-white tabular-nums">0.00 <span class="text-2xl text-orange-500 font-bold">zł</span></div>
             </div>
         </div>
     </section>
 
-    <section id="funkcje" class="py-20 px-6 max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
-        <div class="p-8 rounded-3xl bg-slate-800/20 border border-slate-800">
-            <h3 class="text-orange-500 font-black text-lg mb-4 uppercase">Mobilność</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Zainstaluj FrameCalc na telefonie i wyceniaj ramy stojąc bezpośrednio przy kliencie w warsztacie.</p>
-        </div>
-        <div class="p-8 rounded-3xl bg-slate-800/20 border border-slate-800">
-            <h3 class="text-orange-500 font-black text-lg mb-4 uppercase">Twoje Ceny</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Aplikacja pozwala na pełną personalizację cenników (szkło, plexi, typy ram, marża).</p>
-        </div>
-        <div class="p-8 rounded-3xl bg-slate-800/20 border border-slate-800">
-            <h3 class="text-orange-500 font-black text-lg mb-4 uppercase">Polska Firma</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">Narzędzie stworzone z myślą o lokalnych rzemieślnikach i salonach fotograficznych.</p>
-        </div>
-    </section>
-
-    <footer class="py-10 text-center border-t border-slate-900">
-        <p class="text-slate-600 text-sm font-medium">© 2026 FrameCalc.pl | System Wycen dla Ramiarzy</p>
-    </nav>
+    <footer class="py-10 text-center border-t border-slate-900 bg-slate-950/50">
+        <p class="text-slate-700 text-xs font-bold uppercase tracking-widest">FrameCalc.pl - Narzędzia dla profesjonalistów</p>
+    </footer>
 
     <script src="assets/js/script.js"></script>
-    <script>
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('SW Registered'))
-                    .catch(err => console.log('SW Error: ', err));
-            });
-        }
-    </script>
 </body>
 </html>
