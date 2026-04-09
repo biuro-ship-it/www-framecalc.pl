@@ -1,6 +1,6 @@
 /**
- * FrameCalc.pl - Logic Engine v2.0
- * Konfigurator dynamiczny: Sayart, Eurorama, Lira
+ * FrameCalc.pl - Logic Engine v2.1
+ * Data Aktualizacji: 2026-04-09
  */
 
 const DATA = {
@@ -27,29 +27,23 @@ const DATA = {
     materials: {
         glass: { "float": 45, "antyrefleks": 90, "brak": 0 },
         backs: { "hdf": 20, "pianka": 35, "brak": 0 },
-        pp: { "brak": 0, "standard": 60, "bezkwasowe": 110 }
+        pp: { "brak": 0, "standard": 60 }
     },
-    baseService: 25 // stała opłata za montaż
+    baseService: 25 
 };
 
 let selectedMfr = null;
 
-// Funkcja wyboru producenta
 function selectManufacturer(name) {
     selectedMfr = name;
-    
-    // Wizualna zmiana przycisków
-    document.querySelectorAll('.manufacturer-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    document.querySelectorAll('.manufacturer-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`btn-${name}`).classList.add('active');
 
-    // Pokazanie i wypełnienie dropdownu listew
     const container = document.getElementById('listwa-container');
     const select = document.getElementById('kod-listwy');
     
     container.style.display = 'block';
-    select.innerHTML = ''; // czyszczenie
+    select.innerHTML = ''; 
 
     DATA.manufacturers[name].forEach(item => {
         const option = document.createElement('option');
@@ -77,32 +71,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const extraCharge = parseFloat(document.getElementById('oplata-extra').value) || 0;
 
         if (!szer || !wys) {
-            alert("Podaj wymiary obrazu!");
+            alert("Podaj wymiary ramy!");
             return;
         }
 
-        // 1. Cena listwy (Obwód)
         const itemObj = DATA.manufacturers[selectedMfr].find(i => i.id === kodListwy);
         const obwodMb = ((szer + wys) * 2) / 100;
         const kosztListwy = obwodMb * itemObj.price;
 
-        // 2. Koszty powierzchniowe (Pole m2)
         const poleM2 = (szer * wys) / 10000;
         const kosztSzkla = poleM2 * DATA.materials.glass[rodzajSzkla];
         const kosztTyly = poleM2 * DATA.materials.backs[rodzajTyly];
         const kosztPP = poleM2 * DATA.materials.pp[rodzajPP];
 
-        // 3. Suma
         const suma = kosztListwy + kosztSzkla + kosztTyly + kosztPP + extraCharge + DATA.baseService;
 
-        // Wynik
         const wynikBox = document.getElementById('wynik-box');
         const wynikCena = document.getElementById('wynik-cena');
 
         wynikBox.classList.remove('hidden');
         wynikCena.innerText = suma.toFixed(2);
         
-        // Przewinięcie do wyniku na mobile
         wynikBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 });

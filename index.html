@@ -13,9 +13,10 @@
     
     <style>
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .glass-effect { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); }
+        .glass-effect { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .manufacturer-btn.active { border-color: #f97316; background-color: rgba(249, 115, 22, 0.1); color: white; }
+        .faq-item:hover { border-color: #f97316; }
     </style>
 </head>
 <body class="bg-[#0F172A] text-slate-200 antialiased font-sans">
@@ -23,97 +24,175 @@
     <nav class="sticky top-0 z-50 p-4 border-b border-slate-800 glass-effect">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="assets/images/icon-192.png" alt="Logo FrameCalc" class="w-10 h-10 rounded-lg shadow-lg">
+                <img src="assets/images/icon-192.png" alt="Logo" class="w-10 h-10 rounded-lg">
                 <div class="text-xl font-black tracking-tighter text-white uppercase">
                     Frame<span class="text-orange-500">Calc</span>
                 </div>
             </div>
-            <div class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <a href="#kalkulator" class="hover:text-orange-500 transition font-bold">Demo Konfigurator</a>
-                <a href="https://app.framecalc.pl" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition shadow-lg shadow-orange-900/20 font-bold">Logowanie App</a>
+            <div class="hidden lg:flex space-x-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                <a href="#kalkulator" class="hover:text-orange-500 transition">Kalkulator</a>
+                <a href="#instrukcja" class="hover:text-orange-500 transition">Instrukcja</a>
+                <a href="#faq" class="hover:text-orange-500 transition">FAQ</a>
+                <a href="#kontakt" class="hover:text-orange-500 transition">Kontakt</a>
+                <a href="https://app.framecalc.pl" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition">Zaloguj do App</a>
             </div>
         </div>
     </nav>
 
-    <section id="kalkulator" class="py-16 px-4">
+    <header class="py-12 px-6 text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-black text-white mb-4 leading-tight">
+            Wyceniaj ramy <span class="text-orange-500 italic">jak ekspert.</span>
+        </h1>
+        <p class="text-slate-400 text-lg mb-8">System do błyskawicznej wyceny oprawy obrazów dla salonów i warsztatów.</p>
+    </header>
+
+    <section id="kalkulator" class="py-10 px-4">
         <div class="max-w-xl mx-auto bg-[#1E293B] rounded-[2.5rem] p-8 md:p-10 shadow-3xl border border-slate-700">
             
-            <h2 class="text-2xl font-black text-white italic tracking-tighter uppercase mb-8 flex items-center gap-3">
-                <span class="text-orange-500">PRO</span> Wycena Zlecenia
-            </h2>
-
-            <div class="mb-8">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 block ml-1">Krok 1: Wybierz Producenta</label>
+            <div class="mb-8 text-center">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 block">1. Wybierz dostawcę listwy</label>
                 <div class="grid grid-cols-3 gap-3">
-                    <button type="button" onclick="selectManufacturer('Sayart')" id="btn-Sayart" class="manufacturer-btn py-4 px-2 border-2 border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:border-slate-600 transition-all uppercase italic">Sayart</button>
-                    <button type="button" onclick="selectManufacturer('Eurorama')" id="btn-Eurorama" class="manufacturer-btn py-4 px-2 border-2 border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:border-slate-600 transition-all uppercase italic">Eurorama</button>
-                    <button type="button" onclick="selectManufacturer('Lira')" id="btn-Lira" class="manufacturer-btn py-4 px-2 border-2 border-slate-800 rounded-2xl text-xs font-black text-slate-500 hover:border-slate-600 transition-all uppercase italic">Lira</button>
+                    <button onclick="selectManufacturer('Sayart')" id="btn-Sayart" class="manufacturer-btn py-4 border-2 border-slate-800 rounded-2xl text-[10px] font-black text-slate-500 hover:border-slate-600 transition uppercase">Sayart</button>
+                    <button onclick="selectManufacturer('Eurorama')" id="btn-Eurorama" class="manufacturer-btn py-4 border-2 border-slate-800 rounded-2xl text-[10px] font-black text-slate-500 hover:border-slate-600 transition uppercase">Eurorama</button>
+                    <button onclick="selectManufacturer('Lira')" id="btn-Lira" class="manufacturer-btn py-4 border-2 border-slate-800 rounded-2xl text-[10px] font-black text-slate-500 hover:border-slate-600 transition uppercase">Lira</button>
                 </div>
             </div>
 
-            <div class="mb-8 transition-all" id="listwa-container" style="display: none;">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Krok 2: Kod Listwy</label>
-                <select id="kod-listwy" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none shadow-inner">
-                    </select>
+            <div class="mb-8" id="listwa-container" style="display: none;">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">2. Wybierz kod listwy</label>
+                <select id="kod-listwy" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-white font-bold outline-none focus:border-orange-500 transition appearance-none cursor-pointer shadow-inner">
+                </select>
             </div>
 
             <div class="grid grid-cols-2 gap-6 mb-8">
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Szerokość (cm)</label>
-                    <input type="number" id="szerokosc" placeholder="00.0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white font-black outline-none focus:border-orange-500 transition shadow-inner">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1 text-center block">Szerokość (cm)</label>
+                    <input type="number" id="szerokosc" placeholder="00" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white font-black outline-none focus:border-orange-500 transition text-center">
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Wysokość (cm)</label>
-                    <input type="number" id="wysokosc" placeholder="00.0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white font-black outline-none focus:border-orange-500 transition shadow-inner">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1 text-center block">Wysokość (cm)</label>
+                    <input type="number" id="wysokosc" placeholder="00" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-2xl text-white font-black outline-none focus:border-orange-500 transition text-center">
                 </div>
             </div>
 
-            <div class="mb-6">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Rodzaj Szkła</label>
-                <select id="rodzaj-szkla" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none shadow-inner">
+            <div class="grid grid-cols-1 gap-4 mb-6">
+                <select id="rodzaj-szkla" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500">
                     <option value="float">Szkło Float 2mm</option>
-                    <option value="antyrefleks">Szkło Antyrefleksyjne</option>
-                    <option value="brak">Brak (Sama oprawa)</option>
+                    <option value="antyrefleks">Szkło Antyrefleks</option>
+                    <option value="brak">Bez szkła</option>
                 </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tyły (Plecy)</label>
-                    <select id="rodzaj-tyly" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none">
-                        <option value="hdf">Płyta HDF 3mm</option>
-                        <option value="pianka">Pianka 5mm</option>
-                        <option value="brak">Brak</option>
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="rodzaj-tyly" class="bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500 font-bold">
+                        <option value="hdf">Tyły HDF</option>
+                        <option value="pianka">Tyły Pianka</option>
+                        <option value="brak">Bez tyłów</option>
                     </select>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Passe-partout</label>
-                    <select id="rodzaj-paspartu" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500 transition cursor-pointer appearance-none">
-                        <option value="brak">Brak</option>
-                        <option value="standard">Standard (Karton)</option>
-                        <option value="bezkwasowe">Bezkwasowe Premium</option>
+                    <select id="rodzaj-paspartu" class="bg-[#0F172A] border-2 border-slate-800 rounded-xl p-3 text-sm text-white font-bold outline-none focus:border-orange-500 font-bold">
+                        <option value="brak">Bez Passe-partout</option>
+                        <option value="standard">Passe-partout 1.4mm</option>
                     </select>
                 </div>
             </div>
 
             <div class="mb-8">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Opłata Dodatkowa (zł)</label>
-                <input type="number" id="oplata-extra" placeholder="0.00" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-xl text-orange-500 font-black outline-none focus:border-orange-500 transition shadow-inner">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 block ml-1">Opłata dodatkowa / Serwis (zł)</label>
+                <input type="number" id="oplata-extra" value="0" class="w-full bg-[#0F172A] border-2 border-slate-800 rounded-2xl p-4 text-xl text-orange-500 font-black outline-none focus:border-orange-500 transition shadow-inner">
             </div>
 
-            <button id="btn-oblicz" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-2xl font-black text-xl tracking-tighter transition-all active:scale-95 shadow-xl shadow-orange-900/30">
-                OBLICZ SUMĘ ZLECENIA
+            <button id="btn-oblicz" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-2xl font-black text-xl tracking-tighter transition shadow-xl shadow-orange-900/20 active:scale-95">
+                OBLICZ WYCENĘ
             </button>
 
             <div id="wynik-box" class="mt-10 pt-8 border-t border-slate-800 text-center hidden">
-                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Suma do zapłaty (Brutto)</p>
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Suma zlecenia</p>
                 <div id="wynik-cena" class="text-6xl font-black text-white tabular-nums">0.00 <span class="text-2xl text-orange-500 font-bold">zł</span></div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center border-t border-slate-900 bg-slate-950/50">
-        <p class="text-slate-700 text-xs font-bold uppercase tracking-widest">FrameCalc.pl - Narzędzia dla profesjonalistów</p>
+    <section id="instrukcja" class="py-20 px-6 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-black text-white mb-12 text-center italic uppercase tracking-tighter">Jak to działa?</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+            <div class="text-center">
+                <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-black mx-auto mb-4 shadow-lg shadow-orange-900/40">1</div>
+                <h3 class="font-bold mb-2">Wybierz listwę</h3>
+                <p class="text-sm text-slate-400">Kliknij logo producenta i wybierz konkretny profil z listy.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-black mx-auto mb-4 shadow-lg shadow-orange-900/40">2</div>
+                <h3 class="font-bold mb-2">Wpisz wymiar</h3>
+                <p class="text-sm text-slate-400">Podaj szerokość i wysokość obrazu w centymetrach.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-black mx-auto mb-4 shadow-lg shadow-orange-900/40">3</div>
+                <h3 class="font-bold mb-2">Wynik i archiwum</h3>
+                <p class="text-sm text-slate-400">Otrzymaj gotową cenę. W pełnej wersji możesz zapisać wycenę do bazy.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="zalety" class="py-20 px-6 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+            <div class="p-8 rounded-3xl bg-[#1E293B] border border-slate-700 shadow-xl text-center">
+                <div class="text-4xl mb-4">🇵🇱</div>
+                <h3 class="font-black text-white uppercase mb-2">Polski Producent</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">System projektowany we współpracy z polskimi warsztatami ramiarskimi i fotografami.</p>
+            </div>
+            <div class="p-8 rounded-3xl bg-[#1E293B] border border-slate-700 shadow-xl text-center">
+                <div class="text-4xl mb-4">🚀</div>
+                <h3 class="font-black text-white uppercase mb-2">Płynność i Szybkość</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Koniec z szukaniem cen w zeszytach. Wyceniaj przy kliencie, budując profesjonalny wizerunek.</p>
+            </div>
+            <div class="p-8 rounded-3xl bg-[#1E293B] border border-slate-700 shadow-xl text-center">
+                <div class="text-4xl mb-4">🔐</div>
+                <h3 class="font-black text-white uppercase mb-2">Bezpieczeństwo Danych</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Twoje cenniki są Twoją tajemnicą. Są bezpiecznie szyfrowane i dostępne tylko dla Ciebie.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-24 px-6 max-w-3xl mx-auto">
+        <h2 class="text-3xl font-black text-white mb-12 text-center uppercase italic tracking-tighter">Najczęstsze Pytania</h2>
+        <div class="space-y-4">
+            <div class="faq-item p-6 rounded-2xl bg-slate-800/30 border border-slate-800 transition">
+                <h4 class="font-bold text-white mb-2">Czy aplikacja jest darmowa?</h4>
+                <p class="text-sm text-slate-400 text-slate-400 leading-relaxed">Kalkulator demo na stronie jest darmowy. Pełna wersja z własnymi cennikami i archiwum działa w modelu niskiego abonamentu.</p>
+            </div>
+            <div class="faq-item p-6 rounded-2xl bg-slate-800/30 border border-slate-800 transition">
+                <h4 class="font-bold text-white mb-2">Czy mogę dodać własnych dostawców listew?</h4>
+                <p class="text-sm text-slate-400 leading-relaxed">Tak! Wersja PRO pod adresem app.framecalc.pl pozwala na dodawanie dowolnych kodów listew, marż i producentów.</p>
+            </div>
+            <div class="faq-item p-6 rounded-2xl bg-slate-800/30 border border-slate-800 transition">
+                <h4 class="font-bold text-white mb-2">Jak zainstalować ikonkę na telefonie?</h4>
+                <p class="text-sm text-slate-400 leading-relaxed">W Chrome kliknij trzy kropki i "Zainstaluj aplikację". W Safari na iPhone użyj ikony Udostępnij i wybierz "Do ekranu początkowego".</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="kontakt" class="py-20 px-6 border-t border-slate-900 bg-slate-950/80">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
+            <div>
+                <h2 class="text-3xl font-black text-white mb-6 uppercase italic tracking-tighter">Skontaktuj się</h2>
+                <p class="text-slate-400 mb-8">Masz pytania dotyczące wdrożenia systemu w swoim salonie? Napisz lub zadzwoń.</p>
+                <div class="space-y-4 font-bold text-slate-300">
+                    <p class="flex items-center gap-3"><span class="text-orange-500 text-xl">📧</span> kontakt@framecalc.pl</p>
+                    <p class="flex items-center gap-3"><span class="text-orange-500 text-xl">📞</span> +48 000 000 000</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-black text-white mb-6 uppercase italic tracking-tighter">Dane firmy</h2>
+                <div class="text-slate-500 text-sm leading-loose">
+                    <p class="font-bold text-slate-400">FrameCalc.pl Sp. z o.o.</p>
+                    <p>ul. Ramiarska 15/4</p>
+                    <p>00-001 Warszawa</p>
+                    <p>NIP: 000-000-00-00</p>
+                    <p>REGON: 000000000</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-20 text-[10px] uppercase font-bold text-slate-700 tracking-[0.3em]">
+            © 2026 FrameCalc.pl | System Wycen dla Ramiarzy
+        </div>
     </footer>
 
     <script src="assets/js/script.js"></script>
