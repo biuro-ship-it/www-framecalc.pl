@@ -3,22 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrameCalc - Kalkulator dla Ramiarzy</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#E67E22">
-    
+    <title>FrameCalc - Profesjonalna Wycena Oprawy</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2C3E50">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-gray-50 font-sans text-gray-900">
+<body class="bg-[#0F172A] text-slate-200 font-sans leading-relaxed">
 
-    <div id="app">
-        <h1 class="text-center mt-20 text-2xl font-bold">FrameCalc.pl w budowie...</h1>
-    </div>
+    <nav class="p-6 max-w-6xl mx-auto flex justify-between items-center">
+        <div class="text-2xl font-black tracking-tighter text-white">
+            FRAME<span class="text-orange-500">CALC</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-slate-400">
+            <a href="#kalkulator" class="hover:text-orange-500 transition">Kalkulator</a>
+            <a href="#funkcje" class="hover:text-orange-500 transition">Funkcje</a>
+            <a href="#pobierz" class="hover:text-orange-500 transition text-white">Pobierz Apkę</a>
+        </div>
+    </nav>
+
+    <header class="pt-10 pb-20 px-6 text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+            Wyceniaj ramy <br> <span class="text-orange-500">w 15 sekund.</span>
+        </h1>
+        <p class="text-xl text-slate-400 mb-10">
+            Profesjonalne narzędzie dla warsztatów ramiarskich. <br> 
+            Własne cenniki, historia zleceń i mobilność w jednym.
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="#kalkulator" class="bg-orange-600 hover:bg-orange-500 text-white px-10 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-xl shadow-orange-900/20">
+                Otwórz Kalkulator
+            </a>
+            <a href="#pobierz" class="bg-slate-800 hover:bg-slate-700 text-white px-10 py-4 rounded-full font-bold text-lg transition-all">
+                Dodaj do telefonu
+            </a>
+        </div>
+    </header>
+
+    <section id="kalkulator" class="py-20 px-4 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-xl mx-auto bg-[#1E293B] rounded-3xl p-8 shadow-2xl border border-slate-700">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span class="bg-orange-500 p-2 rounded-lg text-white">📏</span> Szybka Wycena
+            </h2>
+            
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-500 uppercase">Szerokość (cm)</label>
+                    <input type="number" id="szerokosc" placeholder="0.0" class="w-full bg-[#0F172A] border border-slate-700 rounded-xl p-4 text-2xl text-white outline-none focus:border-orange-500 transition">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-500 uppercase">Wysokość (cm)</label>
+                    <input type="number" id="wysokosc" placeholder="0.0" class="w-full bg-[#0F172A] border border-slate-700 rounded-xl p-4 text-2xl text-white outline-none focus:border-orange-500 transition">
+                </div>
+            </div>
+
+            <div class="space-y-2 mb-8">
+                <label class="text-xs font-bold text-slate-500 uppercase">Rodzaj Oprawy</label>
+                <select id="rodzaj" class="w-full bg-[#0F172A] border border-slate-700 rounded-xl p-4 text-white outline-none focus:border-orange-500 transition cursor-pointer">
+                    <option value="standard">Rama Drewniana (Standard)</option>
+                    <option value="alu">Rama Aluminiowa</option>
+                    <option value="anty">Antyrama Plexi</option>
+                </select>
+            </div>
+
+            <button id="btn-oblicz" class="w-full bg-orange-600 hover:bg-orange-500 text-white py-5 rounded-2xl font-black text-xl tracking-wide transition-all active:scale-95 shadow-lg shadow-orange-900/40">
+                OBLICZ CENĘ
+            </button>
+
+            <div id="wynik-box" class="mt-8 pt-8 border-t border-slate-700 text-center hidden">
+                <p class="text-slate-400 text-sm uppercase font-bold mb-1">Cena Twojej oprawy</p>
+                <div id="wynik-cena" class="text-5xl font-black text-white">0.00 zł</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="funkcje" class="py-24 px-6 max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
+        <div class="p-8 bg-slate-800/30 rounded-3xl border border-slate-800">
+            <div class="text-4xl mb-4">📂</div>
+            <h3 class="text-xl font-bold text-white mb-2">Archiwum zleceń</h3>
+            <p class="text-slate-400">Wszystkie Twoje wyceny zapisywane są lokalnie. Nigdy nie zapomnisz ceny podanej klientowi.</p>
+        </div>
+        <div class="p-8 bg-slate-800/30 rounded-3xl border border-slate-800">
+            <div class="text-4xl mb-4">💰</div>
+            <h3 class="text-xl font-bold text-white mb-2">Własne cenniki</h3>
+            <p class="text-slate-400">Możliwość dodawania własnych stawek za metr bieżący listwy oraz formaty szkła.</p>
+        </div>
+        <div class="p-8 bg-slate-800/30 rounded-3xl border border-slate-800">
+            <div class="text-4xl mb-4">📱</div>
+            <h3 class="text-xl font-bold text-white mb-2">Działa Offline</h3>
+            <p class="text-slate-400">Jako aplikacja PWA, FrameCalc działa nawet bez dostępu do internetu w Twoim warsztacie.</p>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-slate-500 border-t border-slate-900">
+        <p>© 2026 FrameCalc.pl | Stworzone dla ramiarzy</p>
+    </footer>
 
     <script src="assets/js/script.js"></script>
     <script>
+        // Rejestracja Service Workera
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js');
         }
